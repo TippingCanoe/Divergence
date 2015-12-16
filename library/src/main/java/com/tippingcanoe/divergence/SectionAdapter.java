@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    boolean isLoading;
-    boolean isError;
+    boolean isLoading = false;
+    boolean isError = false;
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
@@ -36,7 +37,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
             return getErrorResultsLayout();
         }
 
-        if (getNoResultsLayout() != null && position == 0) {
+        if (getNoResultsLayout() != null && getDataCount() == 0 && position == 0) {
             return getNoResultsLayout();
         }
 
@@ -110,17 +111,47 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public void setLoading(boolean loading) {
-        isLoading = loading;
-        isError = false;
+        if (getLoadingResultsLayout() == null) {
+            throw new InvalidParameterException("You did not provide a layout for the loading cell.");
+        }
+
+
+        if (isLoading != loading) {
+            boolean wasError = isError;
+
+            isLoading = loading;
+            isError = false;
+
+            if (wasError) {
+                notifyItemChanged(getDataCount());
+            } else {
+                notifyItemInserted(getDataCount());
+            }
+        }
     }
 
     public void setError(boolean error) {
-        isLoading = false;
-        isError = error;
+        if (getErrorResultsLayout() == null) {
+            throw new InvalidParameterException("You did not provide a layout for the error cell.");
+        }
+
+        if (isError != error) {
+            boolean wasLoading = isLoading;
+
+            isLoading = false;
+            isError = error;
+
+            if (wasLoading) {
+                notifyItemChanged(getDataCount());
+            } else {
+                notifyItemInserted(getDataCount());
+            }
+        }
     }
 
+    protected abstract
     @Nullable
-    protected abstract RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType);
+    RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType);
 
     protected abstract void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads);
 

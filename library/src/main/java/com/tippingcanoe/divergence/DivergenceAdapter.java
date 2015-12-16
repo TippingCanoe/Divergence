@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    RecyclerView recyclerView;
     List<IdentifiedSection> sections;
 
-    public DivergenceAdapter(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
+    public DivergenceAdapter() {
         sections = new ArrayList<>();
     }
 
@@ -22,7 +20,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         SectionAndPosition sectionAndPosition = convertGlobalPositionToSectionPosition(position);
 
         if (sectionAndPosition != null) {
-            sectionAndPosition.section.section.getItemViewType(sectionAndPosition.positionInSection);
+            return sectionAndPosition.section.section.getItemViewType(sectionAndPosition.positionInSection);
         }
 
         return super.getItemViewType(position);
@@ -82,6 +80,8 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void addSection(SectionAdapter section, String identifier, int position, Importance importance) {
+        section.registerAdapterDataObserver(new DivergenceObserver(this, identifier));
+
         IdentifiedSection identifiedSection = new IdentifiedSection(section, identifier, importance, position);
 
         int insertionListPosition = 0;
@@ -139,6 +139,89 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         return null;
+    }
+
+    public void onChanged(String identifier) {
+        notifyDataSetChanged();
+    }
+
+    public void onItemRangeChanged(String identifier, int positionStart, int itemCount) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                notifyItemRangeChanged(positionStart, itemCount);
+
+                return;
+            }
+
+            positionStart += section.section.getItemCount();
+        }
+    }
+
+    public void onItemRangeChanged(String identifier, int positionStart, int itemCount, Object payload) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                notifyItemRangeChanged(positionStart, itemCount, payload);
+
+                return;
+            }
+
+            positionStart += section.section.getItemCount();
+        }
+    }
+
+    public void onItemRangeInserted(String identifier, int positionStart, int itemCount) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                notifyItemRangeInserted(positionStart, itemCount);
+
+                return;
+            }
+
+            positionStart += section.section.getItemCount();
+        }
+    }
+
+    public void onItemRangeRemoved(String identifier, int positionStart, int itemCount) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                notifyItemRangeRemoved(positionStart, itemCount);
+
+                return;
+            }
+
+            positionStart += section.section.getItemCount();
+        }
+    }
+
+    public void onItemRangeMoved(String identifier, int fromPosition, int toPosition, int itemCount) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                for (int i = 0; i < itemCount; i++) {
+                    notifyItemMoved(fromPosition + i, toPosition + i);
+                }
+
+                return;
+            }
+
+            fromPosition += section.section.getItemCount();
+            toPosition += section.section.getItemCount();
+        }
+    }
+
+    public void setLoading(String identifier, boolean loading) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                section.section.setLoading(loading);
+            }
+        }
+    }
+
+    public void setError(String identifier, boolean error) {
+        for (IdentifiedSection section : sections) {
+            if (section.identifier.equals(identifier)) {
+                section.section.setError(error);
+            }
+        }
     }
 
     protected class SectionAndPosition {

@@ -67,19 +67,19 @@ public class DemoAdapter extends SectionAdapter {
     @Nullable
     @Override
     protected Integer getNoResultsLayout() {
-        return null;
+        return R.layout.no_results_cell;
     }
 
     @Nullable
     @Override
     protected Integer getLoadingResultsLayout() {
-        return null;
+        return R.layout.loading_cell;
     }
 
     @Nullable
     @Override
     protected Integer getErrorResultsLayout() {
-        return null;
+        return R.layout.error_cell;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

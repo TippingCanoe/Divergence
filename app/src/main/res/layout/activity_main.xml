@@ -12,8 +12,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="load" />
+
+        <Button
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="error" />
 
         <Button
             android:id="@+id/add"
@@ -25,11 +37,18 @@
             android:id="@+id/remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remove" />
+            android:text="Del" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/number"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
@@ -41,12 +60,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name" />
-
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
