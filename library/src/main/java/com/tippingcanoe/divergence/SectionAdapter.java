@@ -14,7 +14,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     boolean isError = false;
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+    final public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
         if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
             onBindLoadingView(holder);
         } else if (getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
@@ -27,7 +27,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public int getItemViewType(int position) {
+    final public int getItemViewType(int position) {
         if (getLoadingResultsLayout() != null && isLoading && position >= getDataCount()) {
             return getLoadingResultsLayout();
         }
@@ -44,7 +44,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public long getItemId(int position) {
+    final public long getItemId(int position) {
         if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
             return getLoadingResultsLayout();
         }
@@ -61,7 +61,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public int getItemCount() {
+    final public int getItemCount() {
         int itemCount = getDataCount();
 
         if (isLoading && getLoadingResultsLayout() != null) {
@@ -80,7 +80,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    final public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
             onBindLoadingView(holder);
         } else if (getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
@@ -93,7 +93,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    final public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (getLoadingResultsLayout() != null && viewType == getLoadingResultsLayout()) {
             return onCreateLoadingResultsViewHolder(parent, viewType);
         }
