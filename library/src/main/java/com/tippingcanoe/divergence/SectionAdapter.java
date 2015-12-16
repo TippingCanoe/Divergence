@@ -220,7 +220,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
      * @param position
      * @return
      */
-    protected abstract int getDataId(int position);
+    protected abstract long getDataId(int position);
 
     /**
      * Calculate and return the number of elements to be displayed, not including loading indicators
