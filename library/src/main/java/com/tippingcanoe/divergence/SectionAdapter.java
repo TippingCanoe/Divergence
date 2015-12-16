@@ -96,18 +96,46 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (getLoadingResultsLayout() != null && viewType == getLoadingResultsLayout()) {
-            return new ViewHolder(parent, getLoadingResultsLayout());
+            return onCreateLoadingResultsViewHolder(parent, viewType);
         }
 
         if (getErrorResultsLayout() != null && viewType == getErrorResultsLayout()) {
-            return new ViewHolder(parent, getErrorResultsLayout());
+            return onCreateErrorResultsViewHolder(parent, viewType);
         }
 
         if (getNoResultsLayout() != null && viewType == getNoResultsLayout()) {
-            return new ViewHolder(parent, getNoResultsLayout());
+            return onCreateNoResultsViewHolder(parent, viewType);
         }
 
         return onCreateDataViewHolder(parent, viewType);
+    }
+
+    protected RecyclerView.ViewHolder onCreateLoadingResultsViewHolder(ViewGroup parent, int viewType) {
+        if (getLoadingResultsLayout() != null) {
+            return new ViewHolder(parent, getLoadingResultsLayout());
+        }
+
+        return null;
+    }
+
+    protected RecyclerView.ViewHolder onCreateErrorResultsViewHolder(ViewGroup parent, int viewType) {
+        if (getErrorResultsLayout() != null) {
+            return new ViewHolder(parent, getErrorResultsLayout());
+        }
+
+        return null;
+    }
+
+    protected RecyclerView.ViewHolder onCreateNoResultsViewHolder(ViewGroup parent, int viewType) {
+        if (getNoResultsLayout() != null) {
+            return new ViewHolder(parent, getNoResultsLayout());
+        }
+
+        return null;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
     }
 
     public void setLoading(boolean loading) {
@@ -128,6 +156,10 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                 notifyItemInserted(getDataCount());
             }
         }
+    }
+
+    public boolean isError() {
+        return isError;
     }
 
     public void setError(boolean error) {
