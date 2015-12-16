@@ -16,7 +16,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public int getItemViewType(int position) {
+    final public int getItemViewType(int position) {
         SectionAndPosition sectionAndPosition = convertGlobalPositionToSectionPosition(position);
 
         if (sectionAndPosition != null) {
@@ -27,7 +27,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    final public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         for (IdentifiedSection identifiedSection : sections) {
             RecyclerView.ViewHolder viewHolder = identifiedSection.section.onCreateViewHolder(parent, viewType);
 
@@ -40,7 +40,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    final public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SectionAndPosition sectionAndPosition = convertGlobalPositionToSectionPosition(position);
 
         if (sectionAndPosition != null) {
@@ -49,7 +49,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+    final public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
         SectionAndPosition sectionAndPosition = convertGlobalPositionToSectionPosition(position);
 
         if (sectionAndPosition != null) {
@@ -58,7 +58,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public int getItemCount() {
+    final public int getItemCount() {
         int count = 0;
 
         for (IdentifiedSection identifiedSection : sections) {
@@ -69,7 +69,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public long getItemId(int position) {
+    final public long getItemId(int position) {
         SectionAndPosition sectionAndPosition = convertGlobalPositionToSectionPosition(position);
 
         if (sectionAndPosition != null) {
@@ -79,6 +79,14 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return super.getItemId(position);
     }
 
+    /**
+     * Add a new section to this list.
+     *
+     * @param section
+     * @param identifier
+     * @param position
+     * @param importance
+     */
     public void addSection(SectionAdapter section, String identifier, int position, Importance importance) {
         section.registerAdapterDataObserver(new DivergenceObserver(this, identifier));
 
@@ -111,7 +119,11 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyItemRangeInserted(insertionListPosition, section.getItemCount());
     }
 
-
+    /**
+     * Remove a section from this list.
+     *
+     * @param identifier
+     */
     public void removeSection(String identifier) {
         int removalListPosition = 0;
 

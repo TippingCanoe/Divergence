@@ -4,7 +4,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.security.InvalidParameterException;
@@ -17,11 +16,11 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
         if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
-            onBindLoadingView(holder.itemView);
+            onBindLoadingView(holder);
         } else if (getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
-            onBindErrorView(holder.itemView);
+            onBindErrorView(holder);
         } else if (getNoResultsLayout() != null && getItemViewType(position) == getNoResultsLayout()) {
-            onBindNoResultsView(holder.itemView);
+            onBindNoResultsView(holder);
         } else {
             onBindDataViewHolder(holder, position, payloads);
         }
@@ -83,11 +82,11 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
-            onBindLoadingView(holder.itemView);
+            onBindLoadingView(holder);
         } else if (getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
-            onBindErrorView(holder.itemView);
+            onBindErrorView(holder);
         } else if (getNoResultsLayout() != null && getItemViewType(position) == getNoResultsLayout()) {
-            onBindNoResultsView(holder.itemView);
+            onBindNoResultsView(holder);
         } else {
             onBindDataViewHolder(holder, position);
         }
@@ -181,36 +180,102 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    protected abstract
-    @Nullable
-    RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType);
+    /**
+     * Return an appropriate view holder for the given item type.
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
+    protected abstract RecyclerView.ViewHolder onCreateDataViewHolder(ViewGroup parent, int viewType);
 
+    /**
+     * Perform appropriate binding of the view to the data in this position.
+     *
+     * @param holder
+     * @param position
+     * @param payloads
+     */
     protected abstract void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads);
 
+    /**
+     * Perform appropriate binding of the view to the data in this position.
+     *
+     * @param holder
+     * @param position
+     */
     protected abstract void onBindDataViewHolder(RecyclerView.ViewHolder holder, int position);
 
+    /**
+     * Return the type of view for the element in this position.
+     *
+     * @param position
+     * @return
+     */
     protected abstract int getDataViewType(int position);
 
+    /**
+     * Return the unique id for the element in this position.
+     *
+     * @param position
+     * @return
+     */
     protected abstract int getDataId(int position);
 
+    /**
+     * Calculate and return the number of elements to be displayed, not including loading indicators
+     * or error indicators.
+     *
+     * @return
+     */
     protected abstract int getDataCount();
 
-    protected abstract void onBindNoResultsView(View noResultsView);
+    /**
+     * Perform appropriate binding on the no results view.
+     *
+     * @param holder
+     */
+    protected abstract void onBindNoResultsView(RecyclerView.ViewHolder holder);
 
-    protected abstract void onBindLoadingView(View loadingView);
+    /**
+     * Perform appropriate binding on the loading view.
+     *
+     * @param holder
+     */
+    protected abstract void onBindLoadingView(RecyclerView.ViewHolder holder);
 
-    protected abstract void onBindErrorView(View errorView);
+    /**
+     * Perform appropriate binding on the error view.
+     *
+     * @param holder
+     */
+    protected abstract void onBindErrorView(RecyclerView.ViewHolder holder);
 
+    /**
+     * Optionally, return the layout resource identifier to be displayed if there are no results.
+     *
+     * @return
+     */
     protected abstract
     @Nullable
     @LayoutRes
     Integer getNoResultsLayout();
 
+    /**
+     * Optionally, return the layout resource identifier to be displayed if results are loading.
+     *
+     * @return
+     */
     protected abstract
     @Nullable
     @LayoutRes
     Integer getLoadingResultsLayout();
 
+    /**
+     * Optionally, return the layout resource identifier to be displayed if there is an error.
+     *
+     * @return
+     */
     protected abstract
     @Nullable
     @LayoutRes

@@ -3,7 +3,6 @@ package com.tippingcanoe.divergence.app;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -50,17 +49,17 @@ public class DemoAdapter extends SectionAdapter {
     }
 
     @Override
-    protected void onBindNoResultsView(View noResultsView) {
+    protected void onBindNoResultsView(RecyclerView.ViewHolder noResultsView) {
 
     }
 
     @Override
-    protected void onBindLoadingView(View loadingView) {
+    protected void onBindLoadingView(RecyclerView.ViewHolder loadingView) {
 
     }
 
     @Override
-    protected void onBindErrorView(View errorView) {
+    protected void onBindErrorView(RecyclerView.ViewHolder errorView) {
 
     }
 
