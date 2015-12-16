@@ -212,7 +212,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
      * @param position
      * @return
      */
-    protected abstract int getDataViewType(int position);
+    public abstract int getDataViewType(int position);
 
     /**
      * Return the unique id for the element in this position.
@@ -220,7 +220,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
      * @param position
      * @return
      */
-    protected abstract long getDataId(int position);
+    public abstract long getDataId(int position);
 
     /**
      * Calculate and return the number of elements to be displayed, not including loading indicators
@@ -228,7 +228,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
      *
      * @return
      */
-    protected abstract int getDataCount();
+    public abstract int getDataCount();
 
     /**
      * Perform appropriate binding on the no results view.
