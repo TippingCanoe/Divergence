@@ -144,7 +144,7 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
         if (isLoading != loading) {
-            boolean wasError = isError;
+            boolean wasError = isError || (getDataCount() == 0 && getNoResultsLayout() != null);
 
             isLoading = loading;
             isError = false;
