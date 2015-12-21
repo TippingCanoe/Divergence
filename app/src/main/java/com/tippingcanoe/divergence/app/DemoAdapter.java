@@ -34,17 +34,17 @@ public class DemoAdapter extends SectionAdapter {
     }
 
     @Override
-    protected int getDataViewType(int position) {
+    public int getDataViewType(int position) {
         return R.layout.list_cell;
     }
 
     @Override
-    protected int getDataId(int position) {
+    public long getDataId(int position) {
         return position;
     }
 
     @Override
-    protected int getDataCount() {
+    public int getDataCount() {
         return 10;
     }
 

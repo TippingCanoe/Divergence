@@ -15,9 +15,9 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     final public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
-        if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
+        if (isLoading && getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
             onBindLoadingView(holder);
-        } else if (getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
+        } else if (isError && getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
             onBindErrorView(holder);
         } else if (getNoResultsLayout() != null && getItemViewType(position) == getNoResultsLayout()) {
             onBindNoResultsView(holder);
@@ -81,9 +81,9 @@ public abstract class SectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     final public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
+        if (isLoading && getLoadingResultsLayout() != null && getItemViewType(position) == getLoadingResultsLayout()) {
             onBindLoadingView(holder);
-        } else if (getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
+        } else if (isError && getErrorResultsLayout() != null && getItemViewType(position) == getErrorResultsLayout()) {
             onBindErrorView(holder);
         } else if (getNoResultsLayout() != null && getItemViewType(position) == getNoResultsLayout()) {
             onBindNoResultsView(holder);

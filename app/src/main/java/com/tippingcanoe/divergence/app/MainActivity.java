@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 String name = String.valueOf(MainActivity.this.name.getText());
 
                 DemoAdapter demoAdapter = new DemoAdapter(name);
-                divergenceAdapter.addSection(demoAdapter, name, number, Importance.MEDIUM);
+                divergenceAdapter.addSection(demoAdapter, name, number, Importance.HIGH);
             }
         });
 

@@ -103,7 +103,7 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
 
             for (int i = 0; i < sections.size(); i++) {
-                if (sections.get(i).requestedPosition <= position || sections.get(i).importance.getRank() > importance.getRank()) {
+                if (sections.get(i).requestedPosition <= position && !(sections.get(i).requestedPosition == position && sections.get(i).importance.getRank() < importance.getRank())) {
                     insertionSectionPosition = i + 1;
                     insertionListPosition += sections.get(i).section.getItemCount();
                 } else {
