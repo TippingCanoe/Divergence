@@ -140,6 +140,23 @@ public class DivergenceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    /**
+     * Returns <code>true</code> if a section with the provided identifier exist within this list,
+     * or <code>false</code> otherwise. Note that this will iterate though all sections until we've
+     * matched the section ID, or we've reached the end of the list.
+     *
+     * @param identifier
+     * @return
+     */
+    public boolean hasSection(String identifier) {
+        for (int i = 0; i < sections.size(); i++) {
+            if (sections.get(i).identifier.equals(identifier)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Nullable
     protected SectionAndPosition convertGlobalPositionToSectionPosition(int globalPosition) {
         for (int i = 0; i < sections.size(); i++) {
